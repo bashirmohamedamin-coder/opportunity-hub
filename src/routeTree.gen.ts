@@ -10,42 +10,133 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedOrgRouteImport } from './routes/_authenticated/org'
 import { Route as OpportunitiesIndexRouteImport } from './routes/opportunities.index'
+import { Route as OpportunitiesIdRouteImport } from './routes/opportunities.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOrgRoute = AuthenticatedOrgRouteImport.update({
+  id: '/org',
+  path: '/org',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const OpportunitiesIndexRoute = OpportunitiesIndexRouteImport.update({
   id: '/opportunities/',
   path: '/opportunities/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OpportunitiesIdRoute = OpportunitiesIdRouteImport.update({
+  id: '/opportunities/$id',
+  path: '/opportunities/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/org': typeof AuthenticatedOrgRoute
+  '/opportunities/$id': typeof OpportunitiesIdRoute
   '/opportunities/': typeof OpportunitiesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/org': typeof AuthenticatedOrgRoute
+  '/opportunities/$id': typeof OpportunitiesIdRoute
   '/opportunities': typeof OpportunitiesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/org': typeof AuthenticatedOrgRoute
+  '/opportunities/$id': typeof OpportunitiesIdRoute
   '/opportunities/': typeof OpportunitiesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/opportunities/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/contact'
+    | '/dashboard'
+    | '/org'
+    | '/opportunities/$id'
+    | '/opportunities/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/opportunities'
-  id: '__root__' | '/' | '/opportunities/'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/contact'
+    | '/dashboard'
+    | '/org'
+    | '/opportunities/$id'
+    | '/opportunities'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/about'
+    | '/auth'
+    | '/contact'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/org'
+    | '/opportunities/$id'
+    | '/opportunities/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
+  ContactRoute: typeof ContactRoute
+  OpportunitiesIdRoute: typeof OpportunitiesIdRoute
   OpportunitiesIndexRoute: typeof OpportunitiesIndexRoute
 }
 
@@ -58,6 +149,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/org': {
+      id: '/_authenticated/org'
+      path: '/org'
+      fullPath: '/org'
+      preLoaderRoute: typeof AuthenticatedOrgRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/opportunities/': {
       id: '/opportunities/'
       path: '/opportunities'
@@ -65,11 +198,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpportunitiesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/opportunities/$id': {
+      id: '/opportunities/$id'
+      path: '/opportunities/$id'
+      fullPath: '/opportunities/$id'
+      preLoaderRoute: typeof OpportunitiesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedOrgRoute: typeof AuthenticatedOrgRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedOrgRoute: AuthenticatedOrgRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
+  ContactRoute: ContactRoute,
+  OpportunitiesIdRoute: OpportunitiesIdRoute,
   OpportunitiesIndexRoute: OpportunitiesIndexRoute,
 }
 export const routeTree = rootRouteImport

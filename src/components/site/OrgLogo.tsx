@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export function OrgLogo({ name, url, className }: { name: string; url?: string | null; className?: string }) {
+export function OrgLogo({ name, url, className }: { name: string; url?: string | null | undefined; className?: string }) {
   const initials = name.replace(/\(.*?\)/g, "").split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
   return url ? (
     <img src={url} alt={`${name} logo`} className={cn("size-12 shrink-0 rounded-xl border bg-card object-cover", className)} />

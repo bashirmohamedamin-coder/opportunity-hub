@@ -11,7 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-type S = { q?: string; category?: string; county?: string; org?: string; mode?: string; deadline?: string; sort?: string };
+type U = string | undefined;
+type S = { q?: U; category?: U; county?: U; org?: U; mode?: U; deadline?: U; sort?: U };
 const str = (v: unknown) => (typeof v === "string" && v ? v : undefined);
 
 export const Route = createFileRoute("/opportunities/")({
@@ -148,7 +149,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
   );
 }
 
-function Filter({ label, value, onChange, options }: { label: string; value?: string; onChange: (v?: string) => void; options: { value: string; label: string }[] }) {
+function Filter({ label, value, onChange, options }: { label: string; value?: string | undefined; onChange: (v?: string) => void; options: { value: string; label: string }[] }) {
   return (
     <div className="space-y-1.5">
       <label className="text-sm font-medium">{label}</label>
